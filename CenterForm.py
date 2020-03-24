@@ -1,21 +1,31 @@
-# This is my first QMainWindow
+# How to center the window
 # Import the necessary library
 
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QDesktopWidget
 
 
 # Custom my class
-class FirstMainWin(QMainWindow):
+class CenterForm(QMainWindow):
+    # init method
     def __init__(self, parent=None):
-        super(FirstMainWin, self).__init__(parent)
+        super(CenterForm, self).__init__(parent)
         # set window title
-        self.setWindowTitle('My first MainWindow application')
+        self.setWindowTitle('Center Window')
         # set window size
         self.resize(400, 300)
-        # set statusBar message
-        self.status = self.statusBar()
-        self.status.showMessage('This message only exits for 5 seconds', 5000)
+
+    # Center Window
+    def center(self):
+        # calculate screen size
+        screen = QDesktopWidget().screenGeometry()
+        # calculate window size
+        size = self.geometry()
+        # calculate left and top distances
+        newLeft = (screen.width() - size.width()) / 2
+        newTop = (screen.height() - size.height()) / 2
+        # move the window to new coordinate
+        self.move(newLeft, newTop)
 
 
 # Setup program entry
@@ -23,8 +33,10 @@ if __name__ == "__main__":
     # creat an application called app
     app = QApplication(sys.argv)
     # instantiate the class named main
-    main = FirstMainWin()
+    main = CenterForm()
     # use the show() method to display main
     main.show()
+    # use the center() method to center the window
+    main.center()
     # enter program mainloop
     sys.exit(app.exec_())
